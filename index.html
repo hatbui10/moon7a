@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lớp MOON-L7/Trà My</title>
+<title>Lớp High - L8/Thu Hà</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
 body { background-color: #050508; color: #e0e0e6; padding: 30px 3px 20px 3px; }
@@ -45,7 +45,7 @@ h3 { color: #ff007f; text-shadow: 0 0 10px rgba(255, 0, 127, 0.5); font-size: 1.
 <h2>Lớp</h2>
 <div class="class-stats" id="classStats">Sĩ số: 0 | Có mặt: 0 | Vắng: 0</div>
 <div class="class-panel">
-<h3>Danh Sách: MOON-L7/Trà My</h3>
+<h3>Danh Sách: High - L8/Thu Hà</h3>
 <br>
 <div class="add-student-box">
 <input type="text" id="newStudentName" placeholder="Dòng 1: Nhập họ và tên...">
@@ -65,79 +65,170 @@ h3 { color: #ff007f; text-shadow: 0 0 10px rgba(255, 0, 127, 0.5); font-size: 1.
 const defaultStudents = [
     {
         "id": 1,
-        "name": "Nguyễn Bảo An",
-        "phone": "0964243909",
+        "name": "Nguyễn Đỗ Hải Long",
+        "phone": "0961287398",
         "status": "present",
         "note": ""
     },
     {
         "id": 2,
-        "name": "Nhật Hưng",
-        "phone": "0904892848",
+        "name": "Nguyễn Hương Trà",
+        "phone": "0973549189",
         "status": "present",
         "note": ""
     },
     {
         "id": 3,
-        "name": "Nguyễn Bích Ngọc",
-        "phone": "0912965919",
+        "name": "Nguyễn Thái Dương",
+        "phone": "0912425469",
         "status": "present",
         "note": ""
     },
     {
         "id": 4,
-        "name": "Chu Tuấn Kiệt",
-        "phone": "0936100374",
+        "name": "Nguyễn Huy Hoàng",
+        "phone": "0912787519",
         "status": "present",
         "note": ""
     },
     {
         "id": 5,
-        "name": "Nguyễn Hưng Tuấn Dũng",
-        "phone": "0974961488",
+        "name": "Nguyễn Phương Linh",
+        "phone": "0845154444",
         "status": "present",
         "note": ""
     },
     {
         "id": 6,
-        "name": "Nguyễn Bảo Khánh (trai)",
-        "phone": "0946209986",
+        "name": "Nguyễn Phương Vy",
+        "phone": "0906010537",
         "status": "present",
         "note": ""
     },
     {
         "id": 7,
-        "name": "Nguyễn Đức Minh Tâm Anh",
-        "phone": "0374924024",
+        "name": "Dương Thanh Lâm",
+        "phone": "0919791388",
         "status": "present",
         "note": ""
     },
     {
         "id": 8,
-        "name": "Trần Thu Thuỷ",
-        "phone": "0783427315",
+        "name": "Trần Thu Uyên",
+        "phone": "0773453668",
         "status": "present",
         "note": ""
     },
     {
         "id": 9,
-        "name": "Đặng Hải Đăng",
-        "phone": "0988678758",
+        "name": "Nguyễn Mạnh Cường",
+        "phone": "0868462972",
         "status": "present",
         "note": ""
     },
     {
         "id": 10,
-        "name": "Nguyễn Viết Minh Quân",
-        "phone": "0333856999",
+        "name": "Nguyễn Trường Sơn",
+        "phone": "0964315276",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 11,
+        "name": "Trần Cát Bình",
+        "phone": "0905583399",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 12,
+        "name": "Tô Quang Anh",
+        "phone": "0377488252",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 13,
+        "name": "Phạm Anh Thư",
+        "phone": "0367214181",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 14,
+        "name": "Đỗ Minh Quang",
+        "phone": "0773006886",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 15,
+        "name": "Nghiêm Hải Lâm",
+        "phone": "0988819366",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 16,
+        "name": "Lê Khánh Ngọc (Sóc)",
+        "phone": "0972720485",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 17,
+        "name": "Nguyễn Lê Uyên Nhi",
+        "phone": "0915131860",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 18,
+        "name": "Dương An Thy",
+        "phone": "0985332435",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 19,
+        "name": "Nguyễn Đỗ Quỳnh Anh",
+        "phone": "0787286186",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 20,
+        "name": "Nguyễn Đỗ Diệu Anh",
+        "phone": "0787286186",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 21,
+        "name": "Trần Minh Châu Sữa",
+        "phone": "0904747244",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 22,
+        "name": "Chử Hoàng Sơn",
+        "phone": "0974478232",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 23,
+        "name": "Nguyễn Thị Kim Tuyến",
+        "phone": "0983674461",
         "status": "present",
         "note": ""
     }
 ];
-let myClass = { name: "MOON-L7/Trà My", students: [] };
+let myClass = { name: "High - L8/Thu Hà", students: [] };
 function displayPhone(p) { if(!p || p==='Chưa có') return 'Chưa có'; let c = p.replace(/\s+/g, ''); if(c.length===10) return c.substring(0,4)+' '+c.substring(4,7)+' '+c.substring(7); return p; }
-function loadData() { const saved = localStorage.getItem('classData_MOON-L7%2FTr%C3%A0%20My'); if(saved) { myClass.students = JSON.parse(saved); } else { myClass.students = defaultStudents; saveData(); } }
-function saveData() { localStorage.setItem('classData_MOON-L7%2FTr%C3%A0%20My', JSON.stringify(myClass.students)); }
+function loadData() { const saved = localStorage.getItem('classData_High%20-%20L8%2FThu%20H%C3%A0'); if(saved) { myClass.students = JSON.parse(saved); } else { myClass.students = defaultStudents; saveData(); } }
+function saveData() { localStorage.setItem('classData_High%20-%20L8%2FThu%20H%C3%A0', JSON.stringify(myClass.students)); }
 window.onload = function() { loadData(); renderStudentList(); renderAbsentList(); updateStats(); };
 function updateStats() { const total = myClass.students.length; const absent = myClass.students.filter(s => s.status === 'absent').length; const present = total - absent; document.getElementById('classStats').innerText = 'Sĩ số: ' + total + ' | Có mặt: ' + present + ' | Vắng: ' + absent; }
 function addNewStudent() { const nameInput = document.getElementById('newStudentName'); const phoneInput = document.getElementById('newStudentPhone'); const name = nameInput.value.trim(); const phone = phoneInput.value.trim().replace(/\s+/g, '') || 'Chưa có'; if(name === '') { alert('Vui lòng nhập tên!'); return; } const nextId = myClass.students.length > 0 ? Math.max(...myClass.students.map(s => s.id)) + 1 : 1; myClass.students.push({ id: nextId, name: name, phone: phone, status: 'present', note: '' }); saveData(); nameInput.value = ''; phoneInput.value = ''; renderStudentList(); renderAbsentList(); updateStats(); }
