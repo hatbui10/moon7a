@@ -1,317 +1,153 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phân Tích Logic - Siêu Tốc Độ</title>
-    <style>
-        :root {
-            --bg-color: #121212; --text-color: #e0e0e0; --container-bg: #1e1e1e;
-            --border-color: #333; --cell-bg: #2d2d2d; --primary-color: #3498db;
-            --highlight-color: #f1c40f; --input-bg: #333; --accent-color: #e67e22;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); color: var(--text-color);
-            margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; padding: 20px;
-        }
-        .main-layout { display: flex; gap: 20px; max-width: 1400px; margin: 0 auto; flex: 1; width: 100%; overflow: hidden; }
-        
-        .left-panel { flex: 2.5; overflow-y: auto; background: var(--container-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .log-panel { flex: 1; background: var(--container-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; }
-        
-        .log-title { font-weight: bold; margin-bottom: 10px; color: var(--highlight-color); border-bottom: 1px solid #444; padding-bottom: 5px; text-align: center; }
-        #logList { overflow-y: auto; list-style: none; padding: 0; margin: 0; }
-        .log-item { padding: 10px; background: rgba(255,255,255,0.05); margin-bottom: 8px; border-radius: 6px; border-left: 4px solid #e74c3c; font-size: 0.85em; }
-
-        #numberGrid { display: grid; gap: 8px; justify-content: center; padding-bottom: 50px; }
-        .cell { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-color); background: var(--cell-bg); font-weight: bold; border-radius: 4px; font-size: 14px; }
-        .cell.label { border-style: dashed; color: var(--primary-color); }
-        .match-highlight { background-color: var(--highlight-color) !important; color: #000 !important; box-shadow: 0 0 10px var(--highlight-color); }
-        .row-index { color: #666; font-size: 0.75em; display: flex; align-items: center; justify-content: center; }
-        
-        .config-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; margin-bottom: 15px; background: #252525; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto; }
-        .rule-item { display: flex; flex-direction: column; align-items: center; }
-        .rule-item label { font-size: 10px; margin-bottom: 4px; color: #aaa; }
-        .rule-item input { width: 90%; padding: 4px; background: var(--input-bg); color: #fff; border: 1px solid #444; text-align: center; border-radius: 4px; font-size: 12px; }
-        
-        .control-bar { background: #2c3e50; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: center; }
-        .input-group { display: flex; align-items: center; gap: 8px; background: #1a1a1a; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--primary-color); }
-        .input-group label { font-size: 11px; font-weight: bold; color: var(--primary-color); }
-        .input-group input { width: 75px; padding: 5px; background: transparent; border: none; color: white; font-weight: bold; text-align: center; }
-
-        button { cursor: pointer; padding: 10px 15px; border: none; font-weight: bold; border-radius: 4px; color: white; transition: 0.3s; font-size: 12px; }
-        .btn-run { background: #27ae60; }
-        .btn-scan { background: #e67e22; border: 2px solid #fff; }
-        .btn-reset { background: #34495e; }
-        .btn-clear { background: #e74c3c; }
-        
-        #scanStatus { text-align: center; font-size: 14px; color: #f1c40f; margin-top: 5px; min-height: 1.5em; font-family: monospace; background: #000; padding: 10px; border-radius: 6px; border: 1px solid #444; }
-        #liveCount { color: #2ecc71; font-size: 1.5em; margin-left: 10px; text-shadow: 0 0 5px #2ecc71; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lớp MOON-L7/Trà My</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background-color: #050508; color: #e0e0e6; padding: 30px 3px 20px 3px; }
+h2, h3 { text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+h2 { color: #00f0ff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); font-size: 1.4rem; }
+h3 { color: #ff007f; text-shadow: 0 0 10px rgba(255, 0, 127, 0.5); font-size: 1.1rem; }
+.class-stats { text-align: center; color: #ffd700; font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; }
+.class-panel { background: #0a0a14; border: 1px solid #00f0ff; border-radius: 6px; padding: 15px 8px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); }
+.add-student-box { display: flex; flex-direction: column; gap: 10px; background: #0d0d1a; border: 1px solid #ffd700; border-radius: 4px; padding: 12px 10px; margin-bottom: 15px; }
+.add-student-box input { width: 100%; background: #050508; border: 1px solid #333; color: #fff; padding: 12px 10px; font-size: 0.9rem; border-radius: 4px; outline: none; }
+.btn-add { background: #ffd700; color: #000; border: none; padding: 12px; font-weight: bold; font-size: 0.9rem; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
+.absent-section { background: rgba(255, 0, 127, 0.05); border: 1px dashed #ff007f; border-radius: 4px; padding: 10px; margin-bottom: 20px; }
+.absent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.absent-title { color: #ff007f; font-weight: bold; font-size: 0.9rem; }
+.copy-btn { background: #ff007f; color: #fff; border: none; padding: 6px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 3px; cursor: pointer; box-shadow: 0 0 8px #ff007f; }
+.absent-list { list-style: none; font-size: 0.9rem; color: #ff55a5; line-height: 1.4; }
+.absent-list li { padding: 3px 0; border-bottom: 1px solid rgba(255, 0, 127, 0.1); }
+.student-list { display: flex; flex-direction: column; gap: 10px; }
+.student-card { background: #121224; border: 1px solid #333; border-left: 4px solid #00f0ff; border-radius: 4px; padding: 12px 10px; display: flex; flex-direction: column; gap: 10px; }
+.student-card.status-absent { border-left-color: #ff007f; background: #1a0813; }
+.student-card.status-present { border-left-color: #00ff66; background: #081a10; }
+.student-info-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-bottom: 1px solid #222; padding-bottom: 6px; }
+.student-meta { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.student-name { font-weight: bold; font-size: 0.95rem; color: #fff; }
+.student-phone { font-size: 0.8rem; color: #888; }
+.student-actions-right { display: flex; gap: 5px; }
+.btn-call { background: #ffd700; color: #000; padding: 8px 12px; font-size: 0.9rem; border: none; border-radius: 4px; cursor: pointer; box-shadow: 0 0 5px #ffd700; }
+.btn-delete { background: #4a0000; color: #ff3333; border: 1px solid #ff3333; padding: 8px 10px; font-size: 0.9rem; border-radius: 4px; cursor: pointer; }
+.student-controls-row { display: flex; gap: 6px; align-items: center; }
+.btn-action { flex: 1; padding: 10px 3px; font-size: 0.8rem; font-weight: bold; border: none; border-radius: 3px; cursor: pointer; text-align: center; color: #fff; background: #333; }
+.btn-absent { background: #4a0025; color: #ff007f; border: 1px solid #ff007f; }
+.btn-absent.active { background: #ff007f; color: #fff; box-shadow: 0 0 10px #ff007f; }
+.btn-present { background: #003311; color: #00ff66; border: 1px solid #00ff66; }
+.btn-present.active { background: #00ff66; color: #000; box-shadow: 0 0 10px #00ff66; }
+.note-select { flex: 1.5; background: #1a1a3a; color: #00f0ff; border: 1px solid #00f0ff; padding: 9px 3px; font-size: 0.8rem; border-radius: 3px; outline: none; }
+</style>
 </head>
 <body>
-
-<div class="main-layout">
-    <div class="left-panel">
-        <div id="ruleConfig" class="config-grid"></div>
-
-        <div class="control-bar">
-            <div class="input-group">
-                <label>CỤM:</label>
-                <input type="number" id="clusterSizeInput" value="3" onchange="updateClusterSize()">
-            </div>
-            <div class="input-group">
-                <label>TRỐNG < :</label>
-                <input type="number" id="maxGapInput" value="7">
-            </div>
-            <div class="input-group">
-                <label>TỔNG MẪU:</label>
-                <input type="number" id="scanLimitInput" value="1000000">
-            </div>
-            <div class="input-group">
-                <label>MẪU/GIÂY:</label>
-                <input type="number" id="speedInput" value="100000">
-            </div>
-            <button class="btn-run" onclick="renderLogic()">CHẠY TAY</button>
-            <button class="btn-scan" onclick="startAutoScan()">⚡ SIÊU QUÉT</button>
-            <button class="btn-reset" onclick="resetUI()">🔄 RESET</button>
-        </div>
-
-        <div style="margin-bottom:15px; display:flex; gap:10px; align-items: center;">
-            <input type="file" id="fileInput" accept=".txt" style="flex:1; background:#333; padding:5px; border-radius:4px;">
-            <button class="btn-clear" onclick="clearAllData()">XÓA DỮ LIỆU</button>
-        </div>
-        
-        <div id="scanStatus">
-            <span id="statusLabel">TRẠNG THÁI:</span>
-            <b id="liveCount">0000000</b>
-        </div>
-        <hr style="border:0; border-top:1px solid #333; margin: 20px 0;">
-        <div id="numberGrid"></div>
-    </div>
-
-    <div class="log-panel">
-        <div class="log-title" id="logTitle">LOG TRỐNG</div>
-        <ul id="logList"></ul>
-    </div>
+<h2>Lớp</h2>
+<div class="class-stats" id="classStats">Sĩ số: 0 | Có mặt: 0 | Vắng: 0</div>
+<div class="class-panel">
+<h3>Danh Sách: MOON-L7/Trà My</h3>
+<br>
+<div class="add-student-box">
+<input type="text" id="newStudentName" placeholder="Dòng 1: Nhập họ và tên...">
+<input type="tel" id="newStudentPhone" placeholder="Dòng 2: Nhập số điện thoại...">
+<button class="btn-add" onclick="addNewStudent()">+ Thêm vào danh sách</button>
 </div>
-
+<div class="absent-section">
+<div class="absent-header">
+<span class="absent-title">DANH SÁCH VẮNG </span>
+<button class="copy-btn" onclick="copyAbsentList()">Copy</button>
+</div>
+<ul class="absent-list" id="absentList"><li><em>Chưa có học sinh vắng</em></li></ul>
+</div>
+<div class="student-list" id="studentList"></div>
+</div>
 <script>
-    const numberGrid = document.getElementById('numberGrid');
-    const logList = document.getElementById('logList');
-    const statusLabel = document.getElementById('statusLabel');
-    const liveCount = document.getElementById('liveCount');
-    const clusterSizeInput = document.getElementById('clusterSizeInput');
-    const speedInput = document.getElementById('speedInput');
-    const ruleConfig = document.getElementById('ruleConfig');
-    
-    let rawNumbers = localStorage.getItem('savedNumbers') || "";
-    let globalRules = JSON.parse(localStorage.getItem('globalRules') || "{}");
-    let isScanning = false;
-
-    function resetUI() {
-        isScanning = false; // Dừng quét
-        statusLabel.textContent = "TRẠNG THÁI:";
-        liveCount.textContent = "0000000";
-        logList.innerHTML = ""; // Xóa nhật ký lỗi
-        if (rawNumbers) renderLogic(); // Vẽ lại lưới ban đầu (nếu có dữ liệu)
+const defaultStudents = [
+    {
+        "id": 1,
+        "name": "Nguyễn Bảo An",
+        "phone": "0964243909",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 2,
+        "name": "Nhật Hưng",
+        "phone": "0904892848",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 3,
+        "name": "Nguyễn Bích Ngọc",
+        "phone": "0912965919",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 4,
+        "name": "Chu Tuấn Kiệt",
+        "phone": "0936100374",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 5,
+        "name": "Nguyễn Hưng Tuấn Dũng",
+        "phone": "0974961488",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 6,
+        "name": "Nguyễn Bảo Khánh (trai)",
+        "phone": "0946209986",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 7,
+        "name": "Nguyễn Đức Minh Tâm Anh",
+        "phone": "0374924024",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 8,
+        "name": "Trần Thu Thuỷ",
+        "phone": "0783427315",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 9,
+        "name": "Đặng Hải Đăng",
+        "phone": "0988678758",
+        "status": "present",
+        "note": ""
+    },
+    {
+        "id": 10,
+        "name": "Nguyễn Viết Minh Quân",
+        "phone": "0333856999",
+        "status": "present",
+        "note": ""
     }
-
-    function updateClusterSize() {
-        saveCurrentInputs();
-        initRuleInputs();
-        if (rawNumbers) renderLogic();
-    }
-
-    function saveCurrentInputs() {
-        const inputs = ruleConfig.querySelectorAll('input');
-        inputs.forEach(input => {
-            const key = input.id.replace('rule_', '');
-            if (input.value.trim() !== "") globalRules[key] = input.value.trim();
-        });
-        localStorage.setItem('globalRules', JSON.stringify(globalRules));
-    }
-
-    function initRuleInputs() {
-        const size = parseInt(clusterSizeInput.value);
-        const total = Math.pow(2, size);
-        ruleConfig.innerHTML = "";
-        for (let i = 0; i < total; i++) {
-            let p = i.toString(2).padStart(size, '0').replace(/0/g, 'A').replace(/1/g, 'b');
-            const div = document.createElement('div');
-            div.className = 'rule-item';
-            div.innerHTML = `<label>${p}</label><input type="text" id="rule_${p}">`;
-            ruleConfig.appendChild(div);
-            if (globalRules[p]) div.querySelector('input').value = globalRules[p];
-        }
-    }
-
-    window.onload = () => {
-        clusterSizeInput.value = localStorage.getItem('clusterSize') || "3";
-        initRuleInputs();
-        if(rawNumbers) renderLogic();
-    };
-
-    document.getElementById('fileInput').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            rawNumbers = event.target.result.replace(/\D/g, '');
-            localStorage.setItem('savedNumbers', rawNumbers);
-            renderLogic();
-        };
-        reader.readAsText(file);
-    });
-
-    function getNumType(char) { return (parseInt(char) >= 5) ? 'A' : 'b'; }
-
-    function checkLogicFast(currentRules, limit, size, groupsData) {
-        let lastIdx = -1;
-        let nextLabels = null;
-        for (let i = 0; i < groupsData.length; i++) {
-            const g = groupsData[i];
-            if (nextLabels) {
-                for (let j = 0; j < size; j++) {
-                    if (nextLabels[j] === g.types[j]) {
-                        if (lastIdx !== -1 && (g.indices[j] - lastIdx - 1 >= limit)) return false;
-                        lastIdx = g.indices[j];
-                    }
-                }
-            }
-            const r = currentRules[g.p];
-            nextLabels = (r && r.length === size) ? r : null;
-        }
-        return lastIdx !== -1;
-    }
-
-    async function startAutoScan() {
-        if (!rawNumbers || isScanning) return;
-        isScanning = true;
-        
-        const startTime = performance.now();
-        const size = parseInt(clusterSizeInput.value);
-        const limit = parseInt(document.getElementById('maxGapInput').value);
-        const scanMax = parseInt(document.getElementById('scanLimitInput').value);
-        
-        statusLabel.textContent = "🚀 ĐANG QUÉT:";
-
-        const groupsData = [];
-        for (let i = 0; i < rawNumbers.length; i += size) {
-            let group = rawNumbers.substring(i, i + size);
-            if (group.length < size) break;
-            let p = ""; let types = []; let indices = [];
-            for (let j = 0; j < size; j++) {
-                const t = getNumType(group[j]);
-                p += t; types.push(t); indices.push(i + j + 1);
-            }
-            groupsData.push({ p, types, indices });
-        }
-
-        const patterns = [];
-        const numP = Math.pow(2, size);
-        for (let i = 0; i < numP; i++) {
-            patterns.push(i.toString(2).padStart(size, '0').replace(/0/g, 'A').replace(/1/g, 'b'));
-        }
-
-        let i = 0;
-        const runBatch = async () => {
-            if (!isScanning) return; 
-
-            const speed = parseInt(speedInput.value) || 100000;
-            const batchSize = Math.max(1, Math.floor(speed / 60)); 
-
-            for (let b = 0; b < batchSize && i < scanMax; b++) {
-                i++;
-                let testRules = {};
-                for(let j=0; j < patterns.length; j++) {
-                    testRules[patterns[j]] = patterns[Math.floor(Math.random() * patterns.length)];
-                }
-
-                if (checkLogicFast(testRules, limit, size, groupsData)) {
-                    const duration = ((performance.now() - startTime) / 1000).toFixed(2);
-                    patterns.forEach(p => {
-                        const el = document.getElementById('rule_' + p);
-                        if(el) el.value = testRules[p];
-                        globalRules[p] = testRules[p];
-                    });
-                    saveCurrentInputs();
-                    renderLogic();
-                    statusLabel.textContent = `✅ TÌM THẤY (${duration}s):`;
-                    liveCount.textContent = i.toLocaleString();
-                    isScanning = false;
-                    return;
-                }
-            }
-
-            liveCount.textContent = i.toString().padStart(7, '0');
-
-            if (i < scanMax && isScanning) {
-                requestAnimationFrame(runBatch);
-            } else if (i >= scanMax) {
-                isScanning = false;
-                statusLabel.textContent = "❌ THẤT BẠI:";
-            }
-        };
-        requestAnimationFrame(runBatch);
-    }
-
-    function renderLogic() {
-        const size = parseInt(clusterSizeInput.value);
-        const limit = parseInt(document.getElementById('maxGapInput').value);
-        saveCurrentInputs();
-        numberGrid.style.gridTemplateColumns = `repeat(${size}, 40px) 25px repeat(${size}, 40px) 40px`;
-        numberGrid.innerHTML = ""; logList.innerHTML = "";
-        
-        let nextLabels = Array(size).fill("");
-        let lastIdx = -1;
-
-        for (let i = 0; i < rawNumbers.length; i += size) {
-            let group = rawNumbers.substring(i, i + size);
-            let rowIndex = Math.floor(i / size) + 1;
-            for (let j = 0; j < size; j++) {
-                const div = document.createElement('div');
-                div.className = 'cell'; div.textContent = group[j] || "-";
-                numberGrid.appendChild(div);
-            }
-            numberGrid.appendChild(document.createElement('div'));
-            for (let j = 0; j < size; j++) {
-                const div = document.createElement('div');
-                div.className = 'cell label';
-                div.textContent = nextLabels[j];
-                const charType = group[j] ? getNumType(group[j]) : null;
-                const currentIdx = i + j + 1;
-                if (nextLabels[j] !== "" && charType === nextLabels[j]) {
-                    div.classList.add('match-highlight');
-                    if (lastIdx !== -1 && (currentIdx - lastIdx - 1 >= limit)) {
-                        const li = document.createElement('li');
-                        li.className = 'log-item';
-                        li.textContent = `TRỐNG: ${currentIdx - lastIdx - 1} (Dòng ${rowIndex})`;
-                        logList.appendChild(li);
-                    }
-                    lastIdx = currentIdx;
-                }
-                numberGrid.appendChild(div);
-            }
-            const idxDiv = document.createElement('div');
-            idxDiv.className = 'row-index'; idxDiv.textContent = rowIndex;
-            numberGrid.appendChild(idxDiv);
-
-            let p = ""; for (let char of group) p += getNumType(char);
-            if (p.length === size) {
-                let r = globalRules[p] || "";
-                nextLabels = r.length === size ? r.split('') : Array(size).fill("");
-            } else { nextLabels = Array(size).fill(""); }
-        }
-    }
-
-    function clearAllData() {
-        if(confirm("Bạn có chắc muốn xóa sạch file và quy tắc đã lưu?")) {
-            localStorage.clear(); 
-            location.reload();
-        }
-    }
+];
+let myClass = { name: "MOON-L7/Trà My", students: [] };
+function displayPhone(p) { if(!p || p==='Chưa có') return 'Chưa có'; let c = p.replace(/\s+/g, ''); if(c.length===10) return c.substring(0,4)+' '+c.substring(4,7)+' '+c.substring(7); return p; }
+function loadData() { const saved = localStorage.getItem('classData_MOON-L7%2FTr%C3%A0%20My'); if(saved) { myClass.students = JSON.parse(saved); } else { myClass.students = defaultStudents; saveData(); } }
+function saveData() { localStorage.setItem('classData_MOON-L7%2FTr%C3%A0%20My', JSON.stringify(myClass.students)); }
+window.onload = function() { loadData(); renderStudentList(); renderAbsentList(); updateStats(); };
+function updateStats() { const total = myClass.students.length; const absent = myClass.students.filter(s => s.status === 'absent').length; const present = total - absent; document.getElementById('classStats').innerText = 'Sĩ số: ' + total + ' | Có mặt: ' + present + ' | Vắng: ' + absent; }
+function addNewStudent() { const nameInput = document.getElementById('newStudentName'); const phoneInput = document.getElementById('newStudentPhone'); const name = nameInput.value.trim(); const phone = phoneInput.value.trim().replace(/\s+/g, '') || 'Chưa có'; if(name === '') { alert('Vui lòng nhập tên!'); return; } const nextId = myClass.students.length > 0 ? Math.max(...myClass.students.map(s => s.id)) + 1 : 1; myClass.students.push({ id: nextId, name: name, phone: phone, status: 'present', note: '' }); saveData(); nameInput.value = ''; phoneInput.value = ''; renderStudentList(); renderAbsentList(); updateStats(); }
+function deleteStudent(id, name) { if(confirm('Bạn có chắc chắn muốn XÓA học sinh ' + name + '?')) { myClass.students = myClass.students.filter(s => s.id !== id); myClass.students.forEach((s, idx) => { s.id = idx + 1; }); saveData(); renderStudentList(); renderAbsentList(); updateStats(); } }
+function renderStudentList() { const container = document.getElementById('studentList'); container.innerHTML = ''; myClass.students.forEach(student => { const card = document.createElement('div'); card.className = 'student-card status-' + student.status; const absentActive = student.status === 'absent' ? 'active' : ''; const presentActive = student.status === 'present' ? 'active' : ''; card.innerHTML = '<div class="student-info-row"><div class="student-meta"><span class="student-name">' + student.id + '. ' + student.name + '</span><span class="student-phone">SĐT: ' + displayPhone(student.phone) + '</span></div><div class="student-actions-right"><button class="btn-call" onclick="callStudent(\'' + student.phone + '\')">📞</button><button class="btn-delete" onclick="deleteStudent(' + student.id + ', \'' + student.name + '\')">🗑️</button></div></div><div class="student-controls-row"><button class="btn-action btn-absent ' + absentActive + '" onclick="updateStatus(' + student.id + ', \'absent\')">Vắng</button><button class="btn-action btn-present ' + presentActive + '" onclick="updateStatus(' + student.id + ', \'present\')">Đi Học</button><select class="note-select" onchange="updateNote(' + student.id + ', this.value)"><option value="" ' + (student.note===''?'selected':'') + '>-- Ghi chú --</option><option value="Không phép" ' + (student.note==='Không phép'?'selected':'') + '>Không phép</option><option value="Có phép" ' + (student.note==='Có phép'?'selected':'') + '>Có phép</option><option value="Muộn" ' + (student.note==='Muộn'?'selected':'') + '>Đi muộn</option><option value="Ốm" ' + (student.note==='Ốm'?'selected':'') + '>Ốm đau</option></select></div>'; container.appendChild(card); }); }
+function updateStatus(id, status) { const student = myClass.students.find(s => s.id === id); student.status = status; saveData(); renderStudentList(); renderAbsentList(); updateStats(); }
+function updateNote(id, value) { const student = myClass.students.find(s => s.id === id); student.note = value; saveData(); renderAbsentList(); }
+function renderAbsentList() { const listContainer = document.getElementById('absentList'); listContainer.innerHTML = ''; const absentStudents = myClass.students.filter(s => s.status === 'absent'); if(absentStudents.length === 0) { listContainer.innerHTML = '<li><em>Chưa có học sinh vắng</em></li>'; return; } absentStudents.forEach(s => { const li = document.createElement('li'); const noteText = s.note ? ' (' + s.note + ')' : ' (Chưa rõ lý do)'; li.innerText = '• ' + s.name + noteText; listContainer.appendChild(li); }); }
+function copyAbsentList() { const total = myClass.students.length; const absentStudents = myClass.students.filter(s => s.status === 'absent'); const absentCount = absentStudents.length; const presentCount = total - absentCount; let text = 'BÁO CÁO ĐIỂM DANH: ' + myClass.name + '\n'; text += 'Sĩ số: ' + total + ' (Có mặt: ' + presentCount + ' | Vắng: ' + absentCount + ')\n-------------------------\nDanh sách học sinh vắng mặt:\n'; if(absentCount === 0) { text += '- Không có học sinh vắng (Lớp đủ).'; } else { absentStudents.forEach((s, idx) => { const note = s.note ? ' (' + s.note + ')' : ''; text += (idx + 1) + '. ' + s.name + note + '\n'; }); } navigator.clipboard.writeText(text).then(() => { alert('Đã copy báo cáo lớp ' + myClass.name + '!'); }).catch(() => { alert('Lỗi copy.'); }); }
+function callStudent(phone) { if(phone === 'Chưa có') { alert('Chưa có SĐT!'); return; } window.location.href = 'tel:' + phone; }
 </script>
 </body>
-                </html>
-                    
+</html>
